@@ -19,19 +19,21 @@ k = int(input("Введите степень k: "))
 
 result = []
 answer = str()
-for i in range(0, k):
+for i in range(0, k + 1):
     result.append(random.randint(0,100))
     if result[i] == 0:
         pass
+    elif i - k == 0:
+        answer = answer + str(f"{random.randint(0,100)} + ")
     else:
         answer = answer + str(f"{random.randint(0,100)}*x^{k - i} + ")
 answer = answer[:-2] + "= 0"
 # print(answer)
 
-now = datetime.datetime.today()
-file_name = str(f'"Python_HW_4","HW_4.4_output {now}.md"')
-print(file_name)
-hw = r'file_name'
+# now = str(datetime.datetime.today())
+# file_name = str(f'"Python_HW_4","HW_4.4_output {now}.md"') # с добавлением даты в название так и не получилось
+# print(file_name)
+hw = Path("Python_HW_4","HW_4.4_output.md")
 # print(now)
 
 with open(hw,'w') as result_out:

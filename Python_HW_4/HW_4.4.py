@@ -26,7 +26,7 @@ for i in range(0, k + 1):
     elif i - k == 0:
         answer = answer + str(f"{random.randint(0,100)} + ")
     else:
-        answer = answer + str(f"{random.randint(0,100)}*x^{k - i} + ")
+        answer = answer + str(f"{random.randint(0,100)}*x(**{k - i}) + ")
 answer = answer[:-2] + "= 0"
 # print(answer)
 

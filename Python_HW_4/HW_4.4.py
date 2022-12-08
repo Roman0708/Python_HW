@@ -6,7 +6,7 @@
 
 import random
 from pathlib import Path
-import datetime
+import time
 
 home = Path.home()
 
@@ -30,11 +30,12 @@ for i in range(0, k + 1):
 answer = answer[:-2] + "= 0"
 # print(answer)
 
-now = str(datetime.datetime.today())
-file_name = str(f'"Python_HW_4","HW_4.4_output {now}.md"') # с добавлением даты в название так и не получилось
-print(file_name)
+now = time.strftime('%Y%m%d%H%M%S')
 
-hw = Path("Python_HW_4",f"HW_4.4_output {now}.md")
+# file_name = str(f'"Python_HW_4","HW_4.4_output_{now}.md"')
+# print(file_name)
+
+hw = Path("Python_HW_4",f"HW_4.4_output_{now}.md")
 # print(now)
 
 with open(hw,'w') as result_out:

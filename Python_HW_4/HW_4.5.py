@@ -8,20 +8,11 @@
 from pathlib import Path
 import os
 
-# print(os.path.realpath(__file__))
-# print(os.getcwd())
-
 home = Path.home()
-path_absolute = Path(os.path.realpath(__file__))
-# print(home)
-print(path_absolute.parent)
+path_absolute = Path(os.path.realpath(__file__))            
 
 input_1 = Path(path_absolute.parent,input("Введите название первого файла: "))
-# path_1 = Path("Python_HW_4",input_1)
-# print(input_1)
 input_2 = Path(path_absolute.parent,input("Введите название второго файла: "))
-# path_2 = Path("Python_HW_4",input_2)
-# print(input_2)
 
 os.chdir(path_absolute.parent)
 
@@ -48,9 +39,9 @@ print(scnd_pl_list)
 def string_to_parts(input_pl_lst):
     out_dict = dict()
     for i in range(len(input_pl_lst)):
-        if input_pl_lst[i].find('(**') != -1:
-            help_list = input_pl_lst[i].split("*")
-            out_dict.update({int(input_pl_lst[i][-2]):int(help_list[0])})
+        if input_pl_lst[i].find('(**') != -1:                               # Проверяем, что элемент последовательности не последний
+            help_list = input_pl_lst[i].split("*")                          # Разделяем многочлен на список коэффициентов и
+            out_dict.update({int(input_pl_lst[i][-2]):int(help_list[0])})   # Добавление в словарь ключа (степени) и элемента (коэффициента). Программа работает только при степени <=9
         else:
             out_dict.update({0:int(input_pl_lst[i])})
             # print(out_dict)
@@ -62,6 +53,27 @@ scnd_dict = string_to_parts(scnd_pl_list)
 print(frst_dict)
 print(scnd_dict)
 
-print(len(scnd_dict))
-# print(frst_pl,scnd_pl)
+def dict_sum(dict_1,dict_2):
+    result_dict = {}
+    for i in range(max(len(dict_1),len(dict_2))):                   # Определяем длину самого большого словаря
+        result_dict.update({i:dict_1.get(i,0)+dict_2.get(i,0)})     # Добавляем в результирующий словарь сумму элементов с одинаковыми ключами (одно значение если ключ уникален для всех словарей)
+    return(result_dict)
 
+result_dict = dict_sum(frst_dict,scnd_dict)
+print(result_dict)
+
+result_string = ""
+for i in range(len(result_dict)):
+    result_string += str(f"{result_dict[(len(result_dict)-1)-i]}*(x**{(len(result_dict)-1)-i}) + ")
+if result_string[-5] == "0":
+    result_string = result_string[:-10]
+else:
+    result_string = result_string[:-3]
+result_string += " = 0"
+
+# print(result_string)
+
+output = Path(path_absolute.parent,"output.md")
+
+with open(output,'w') as output:
+    output.write(result_string)

@@ -18,9 +18,10 @@ window.resizable(False,False)
 
 player_score = 0
 bot_score = 0
-candy_left = 20
+candy_left = 2021
 flag = True
 x = 28
+
 # функции
 
 def bot_turn():
@@ -29,14 +30,16 @@ def bot_turn():
     global flag
     global x
     if candy_left < 28: x = candy_left
-    result = randint(1,x+1)
+    result = randint(1,x)
     bot_score += result
     candy_left -= result
     bot_score_widget['text'] = str(f'Конфеты противника:\n{bot_score}')
     candy_left_widget['text'] = str(f'Осталось конфет:\n{candy_left}')
     prompt_label['text'] = str(f'Противник взял {result} конфет')
     flag=False
-    check_game_over
+    if candy_left <= 0:
+        window.after(100,check_game_over)
+
 
 def get_candy():
     global candy_left
@@ -61,20 +64,55 @@ def get_candy():
             prompt_label['text'] = str(f'Вы взяли {answer_figure} конфет')
             flag = True
             if candy_left <= 0:
-                check_game_over
-            else:    
+                window.after(100,check_game_over)
+            else:
                 window.after(1500,bot_turn)
         else:
             candy_entry.delete(0,"end")
             prompt_label['text'] = str(f"Введите число от 1 до {x}")
 
 def check_game_over():
-    game_over = tkinter.Toplevel()
-    game_over.config(bg='#4d4d4d')
-    game_over.title("Конец игры")
-    game_over.geometry("350x400+100+100")
-    game_over.resizable(False,False)
-    over_label = tkinter.Label(text="Конец игры")
+    global flag
+    player_score_widget.grid_remove()
+    bot_score_widget.grid_remove()
+    candy_left_widget.grid_remove()
+    invite_label.grid_remove()
+    candy_entry.grid_remove()
+    entry_button.grid_remove()
+    prompt_label.grid_remove()
+    if flag == True: result = "Игрок"
+    else: result = "Бот"
+    over_label['text'] = str(f'{result} победил')
+    over_label.grid()
+    # restart_button = tkinter.Button(text="Играть еще раз?",command=start_game)
+    restart_button.grid()
+
+def start_game():
+    global candy_left
+    global x
+    global player_score
+    global bot_score
+    global flag
+    player_score = 0
+    bot_score = 0
+    candy_left = 2021
+    flag = True
+    x = 28
+    bot_score_widget['text'] = str(f'Конфеты противника:\n{bot_score}')
+    candy_left_widget['text'] = str(f'Осталось конфет:\n{candy_left}')
+    player_score_widget['text'] = str(f'Ваши конфеты:\n{player_score}')
+    prompt_label['text'] = str(f"Введите число от 1 до {x}")
+    over_label.grid_remove()
+    restart_button.grid_remove()
+    player_score_widget.grid()
+    bot_score_widget.grid()
+    candy_left_widget.grid()
+    invite_label.grid()
+    candy_entry.grid()
+    entry_button.grid()
+    prompt_label.grid()
+
+    
 
 
 # Виджеты
@@ -97,7 +135,11 @@ candy_entry = tkinter.Entry(window)
 
 entry_button = tkinter.Button(text='Ввести',command=get_candy)
 
-prompt_label = tkinter.Label(text=f'Введите число от 1 до {x-1}')
+prompt_label = tkinter.Label(text=f'Введите число от 1 до {x}')
+
+over_label = tkinter.Label()
+
+restart_button = tkinter.Button(text="Играть еще раз?",command=start_game)
 
 # Первичная инициализация
 candy_left_widget.grid(row=0,column=0,columnspan=2,sticky='we')

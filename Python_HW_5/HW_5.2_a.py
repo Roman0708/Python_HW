@@ -60,26 +60,21 @@ def get_candy():
             player_score_widget['text'] = str(f'Ваши конфеты:\n{player_score}')
             prompt_label['text'] = str(f'Вы взяли {answer_figure} конфет')
             flag = True
-            check_game_over
-            window.after(1500,bot_turn)
+            if candy_left <= 0:
+                check_game_over
+            else:    
+                window.after(1500,bot_turn)
         else:
             candy_entry.delete(0,"end")
             prompt_label['text'] = str(f"Введите число от 1 до {x}")
 
 def check_game_over():
-    global candy_left
-    if candy_left <= 0:
-        window.destroy()
-        game_over = tkinter.Tk()
-        game_over.config(bg='#4d4d4d')
-        game_over.title("Конец игры")
-        game_over.geometry("200x150+200+200")
-        game_over.resizable(False,False)
-        if flag is True: result = "Игрок"
-        else: result = "Бот"
-        over_label = tkinter.Label(text=f'{result} победил')
-        over_label.pack()
-        game_over.mainloop()
+    game_over = tkinter.Toplevel()
+    game_over.config(bg='#4d4d4d')
+    game_over.title("Конец игры")
+    game_over.geometry("350x400+100+100")
+    game_over.resizable(False,False)
+    over_label = tkinter.Label(text="Конец игры")
 
 
 # Виджеты

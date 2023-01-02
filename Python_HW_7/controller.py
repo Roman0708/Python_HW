@@ -1,7 +1,9 @@
 import func as f
+import data_base as db
 
 
 def main_screen():
+    db.init_data_base()
     while True:
         print("Телефонный справочник\n")
         print("1 - Добавить контакт\n")
@@ -13,17 +15,25 @@ def main_screen():
 
 
         if input_command == 1:
-            name = f.name()
             surname = f.surname()
+            name = f.name()
             phone_number = f.phone_number()
             f.database_manual_input(name,surname,phone_number)
             main_screen()
 
 
         elif input_command == 2:
-            name = f.name()
             surname = f.surname()
+            name = f.name()
             f.search_contact(name,surname)
+            input()
+            main_screen()
+
+        
+        elif input_command == 3:
+            surname = f.surname()
+            name = f.name()
+            f.delete_contact(name,surname)
             input()
             main_screen()
 

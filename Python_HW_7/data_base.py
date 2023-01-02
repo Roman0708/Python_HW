@@ -2,19 +2,22 @@ import  func as f
 from pathlib import Path
 import csv
 
+db=[]
+id=0
+db_dict = {}
+
 def init_data_base():
-    data_base = dict.fromkeys(['first_name','surname','phone_number'])
+    global db
+    global id
     with open('DB.csv', 'r', newline='') as csvfile:
-            fieldnames = ['first_name', 'last_name','phone_number']
-            reader = csv.DictReader(csvfile,fieldnames=fieldnames, delimiter=";")
-            # id = 1
-            for row in reader:
-                data_base["first_name"]=row['first_name']
-                data_base['surname']=row['last_name']
-                data_base['phone_number']=row['phone_number']
-                # print(data_base)
-                # data_base.items
-            csvfile.close()
+        reader = csv.reader(csvfile)
+        for row in reader:
+            db.append(row)
+            id += 1
+            db_dict[id]=db[id-1]
+        csvfile.close()
+    
+init_data_base()
+print(db)
+# # print(data_base)
 
-
-# print(data_base)

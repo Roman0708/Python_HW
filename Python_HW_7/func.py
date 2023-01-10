@@ -1,20 +1,7 @@
-# import re
 import csv
 import data_base as db
 import os
-# import main
 
-# def main_screen():
-#     print("Телефонный справочник\n")
-#     print("1 - Добавить контакт\n")
-#     print("2 - Найти контакт\n")
-#     print("3 - Удалить контакт\n")
-#     print("9 - Выход\n")
-#     print("-"*10)
-#     print("\nЧто вы хотите сделать?")
-
-#     command = input()
-#     return(command)
 
 def name():
     input_name = input("Введите имя: ")
@@ -41,8 +28,6 @@ def database_manual_input(name,surname,phone_number):
 
 
 def search_contact(input_name,input_surname):
-    # print(input_name)
-    # print(input_surname)
     with open('DB.csv', 'r', newline='') as csvfile:
         fieldnames = ['last_name','first_name', 'phone_number']
         reader = csv.DictReader(csvfile,fieldnames=fieldnames, delimiter=";")
@@ -84,14 +69,10 @@ def delete_contact(input_name,input_surname):
             scr_f, dst_f = 'newDB.csv','DB.csv'
             os.remove(dst_f)
             os.rename(scr_f,dst_f)
-            
-        # else:
-        #     csvfile.write(str(helplines))
+
             
         csvfile.close()
-    # with open('DB.csv', 'w', newline='') as csvfile:
-    #     fieldnames = ['first_name', 'last_name','phone_number']
-    #     reader = csv.DictWriter(csvfile,fieldnames=fieldnames, delimiter=";")
+
 
 
 def check_input(arg):

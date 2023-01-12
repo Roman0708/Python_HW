@@ -42,10 +42,10 @@ def search_contact(input_name,input_surname):
                 count += 1
                 print(f"{row['last_name']} {row['first_name']}, номер телефона: {row['phone_number']}")
                 edit_dict = {1:row['last_name'],2:row['first_name'],3:row['phone_number']}                  # для редактирования
-                return(edit_dict)                                                                           # контактов
+                return(edit_dict)                                                                  # контактов
         if count == 0:
             print("Контакт не найден")
-            return(False)
+            return("Контакт не найден")
         csvfile.close()
         print("---")
 
@@ -77,6 +77,7 @@ def delete_contact(input_name,input_surname):
 
             
         csvfile.close()
+    return(exist)
 
 
 def edit_choice():
@@ -117,8 +118,8 @@ def edit_contact(input_name,input_surname):
         delete_contact(input_name,input_surname)
         database_manual_input(edit_dict[1],edit_dict[2],edit_dict[3])
         
-    # else:
-    #     print("Контакт не найден")
+    else:
+        print("Контакт не найден")
 
 
     
